@@ -1,12 +1,14 @@
 # 知奈えもん（Chinaemon）— PM支援ロボットの統合シミュレーション
 
 Physical AI 応用1 最終課題。
+
 AIがプロジェクトの遅延リスクを予測し、ロボットが担当者の席まで自律走行し、本人の承認を得たうえで、専用フォルダ内で許可された模擬作業を実行するまでを、一連の処理として実装しました。
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/CDL-Labs/chinaemon-physical-ai/blob/main/Chinaemon_PhysicalAI_MVP.ipynb)
 
 ## デモ動画
-（YouTubeのURL）
+https://youtu.be/6dRI9lpBc5s
+
 ※ 物理走行のシーンは2倍速です（動画内にも表示）。
 
 ## ファイル
