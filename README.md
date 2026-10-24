@@ -1,2 +1,51 @@
-# chinaemon-physical-ai
-Chinaemon: An AI-powered project management support robot integrating delay risk prediction, autonomous navigation in MuJoCo, human approval, and simulated task assistance. Final project for Physical AI Applied 1.
+# 知奈えもん（Chinaemon）— PM支援ロボットの統合シミュレーション
+
+Physical AI 応用1 最終課題。
+AIがプロジェクトの遅延リスクを予測し、ロボットが担当者の席まで自律走行し、本人の承認を得たうえで、専用フォルダ内で許可された模擬作業を実行するまでを、一連の処理として実装しました。
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/CDL-Labs/chinaemon-physical-ai/blob/main/Chinaemon_PhysicalAI_MVP.ipynb)
+
+## デモ動画
+（YouTubeのURL）
+※ 物理走行のシーンは2倍速です（動画内にも表示）。
+
+## ファイル
+| ファイル | 内容 |
+|---|---|
+| `Chinaemon_PhysicalAI_MVP.ipynb` | 本体のノートブック（実行結果つき） |
+| `知奈えもん.png` | キャラクター素材（通常顔） |
+| `知奈えもん_ウィンク.png` | キャラクター素材（ウィンク） |
+| `知奈えもん_ウィンク後にハート.gif` | キャラクター素材（STEP 15-1で読み込み） |
+
+## 主な処理
+| 段階 | 内容 | 主なSTEP |
+|---|---|---|
+| 予測 | scikit-learn（RandomForestClassifier）による遅延リスク予測（教師あり学習・合成データ200件） | 11 |
+| 移動 | BFSによる安全経路計画、MuJoCoでの差動二輪ロボットの物理走行（フィードバック制御） | 12, 14-1〜14-4 |
+| 評価 | 9配置×5席＝45試行の評価実験、通路幅のストレステスト | 14-5, 14-6 |
+| 対話・承認 | 到着判定 → 困りごとの確認 → 本人の承認 | 14-7, 14-12 |
+| 支援 | 隔離環境（専用フォルダ）内で、許可リストの処理だけを実行し検証 | 14-11 |
+| 安全制御 | 3種類の自動テスト（7件・5件・9件） | 14-8, 14-11, 14-12 |
+| 動画 | 物理走行の記録にキャラクターを合成し、提出動画を作成 | 14-13, 15 |
+
+## 実行方法（Google Colab）
+「すべてのセルを実行」は使わず、次の順に実行してください（ボタン操作とファイルのアップロードがあるため）。
+
+1. 素材画像3点をこのリポジトリからダウンロードしておく
+2. STEP 0（実行前の準備）を実行
+3. STEP 14-8を選び、「ランタイム」→「より前のセルを実行」
+4. ボタンを操作
+   - STEP 12-4：到着確認 → 承認する → PC支援を実行
+   - STEP 14-7：物理到着を確認 → 承認する → PC支援を実行
+5. STEP 14-8〜14-12を順に実行（14-12：「開発環境の構築が進まない」→「お願いする（承認）」）
+6. STEP 14-13を実行
+7. STEP 15-1〜15-8を順に実行（15-1：通常顔PNG → ウィンクPNG → GIF の順にアップロード）。15-8で「すべてPASS」と表示されれば完了
+
+### 補足
+- STEP 9〜10の途中に出る「未到着」「3/6 PASS」などの表示は、到着・承認前の段階で安全制御が働いている正常な結果です。
+- STEP 14-13以降の動画作成は、上記の承認の流れを前提としています。拒否や他の選択肢の動作は、STEP 14-8・14-12の自動テストで検証しています。
+
+## 限界
+- AIは合成データで学習しており、実データでの予測精度は未検証です。
+- 走行はMuJoCo上のシミュレーションで、実機では検証していません。
+- 隔離環境はPythonによるアクセス制御で、作業対象は架空の開発環境です。実在のPCは操作していません。
